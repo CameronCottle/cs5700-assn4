@@ -1,4 +1,5 @@
 package cli
+
 import core.EmulatorFacade
 
 fun main() {

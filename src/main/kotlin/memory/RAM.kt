@@ -1,7 +1,5 @@
 package memory
 
-import core.EmulatorFacade
-
 class RAM : Memory {
     private val data = IntArray(4096)
     val screen = CharArray(64) { '0' } // 8x8 display
