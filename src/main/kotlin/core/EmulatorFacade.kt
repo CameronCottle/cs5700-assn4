@@ -6,9 +6,10 @@ import memory.ROM
 class EmulatorFacade {
 
     private val ram = RAM()
-    private var rom = ROM(IntArray(4096))  // fresh ROM, will be replaced on load
+    private var rom = ROM(IntArray(4096))
     private val cpu = CPU(ram, rom)
     private val loader = ProgramLoader()
+    private val screen = Screen.instance  // Screen lives in Facade now
 
     fun loadProgram(path: String) {
         val program = loader.loadOutFile(path)
@@ -16,46 +17,40 @@ class EmulatorFacade {
 
         rom = ROM(program)
         cpu.reset(rom)
+        screen.clear()
     }
 
     fun step(): Boolean {
         val halted = cpu.step()
+
+        // Only draw if a character was actually drawn
+        if (cpu.screenDirty) {
+            drawScreen()
+            cpu.screenDirty = false
+        }
+
         return halted
     }
 
     fun run(maxSteps: Int = 1000) {
         var steps = 0
         while (steps < maxSteps) {
-            val halted = step()
+            if (step()) return
             steps++
-            if (halted) {
-                return
-            }
         }
         println("Max steps reached ($maxSteps) without halt.")
     }
 
-    fun reset() {
-        cpu.registers.reset()
-        for (i in 0 until 4096) ram.write(i, 0)
-    }
-
-    fun dumpROM(n: Int = 16) {
-        println("First $n nibbles of ROM:")
-        for (i in 0 until n) {
-            val value = rom.read(i)
-            print(String.format("%X ", value))
-        }
-        println()
-    }
-
-    private fun printScreen() {
-        val screen = Screen.instance.snapshot()
-        for (row in screen) {
+    private fun drawScreen() {
+        for (row in screen.snapshot()) {
             println(row.concatToString())
         }
         println("========")
     }
 
-
+    fun reset() {
+        cpu.registers.reset()
+        for (i in 0 until 4096) ram.write(i, 0)
+        screen.clear()
+    }
 }

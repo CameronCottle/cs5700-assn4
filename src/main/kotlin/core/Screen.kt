@@ -1,22 +1,33 @@
 package core
 
 class Screen private constructor() {
-    private val buffer = Array(8) { CharArray(8) { '0' } }
-
-    fun write(x: Int, y: Int, char: Char) {
-        if (x in 0..7 && y in 0..7) buffer[y][x] = char
-    }
+    private val width = 8
+    private val height = 8
+    private val buffer = Array(height) { CharArray(width) { ' ' } } // use spaces
 
     fun clear() {
-        for (y in 0..7) for (x in 0..7) buffer[y][x] = '0'
+        for (row in 0 until height) {
+            for (col in 0 until width) {
+                buffer[row][col] = ' '
+            }
+        }
     }
 
-    fun draw() {
-        for (row in buffer) println(row.concatToString())
-        println("========")
+    fun write(x: Int, y: Int, char: Char) {
+        if (x in 0 until width && y in 0 until height) {
+            buffer[y][x] = char
+        }
     }
 
-    fun snapshot(): Array<CharArray> = buffer.map { it.clone() }.toTypedArray()
+    fun snapshot(): Array<CharArray> {
+        // Convert spaces to 0 for debugging
+        return Array(height) { row ->
+            CharArray(width) { col ->
+                val c = buffer[row][col]
+                if (c == ' ') '0' else c
+            }
+        }
+    }
 
     companion object {
         val instance: Screen by lazy { Screen() }
