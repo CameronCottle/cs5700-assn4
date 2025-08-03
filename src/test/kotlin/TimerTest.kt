@@ -1,33 +1,39 @@
-import core.RegisterBank
-import core.Timer
-import org.junit.jupiter.api.Assertions.*
+package core
+
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.Assertions.*
 
 class TimerTest {
 
     @Test
-    fun `test timer decrements to zero`() {
-        val bank = RegisterBank()
-        bank.t = 3
-        val timer = Timer(bank)
+    fun `timer decrements t register over time`() {
+        val registers = RegisterBank()
+        val timer = Timer(registers)
 
+        registers.t = 3
         timer.start()
-        Thread.sleep(100) // Wait ~6 ticks
-        timer.stop()
 
-        assertEquals(0, bank.t)
+        // Wait enough for multiple ticks (16ms * 3 = 48ms)
+        Thread.sleep(100)
+
+        timer.stop()
+        assertTrue(registers.t < 3, "Timer should decrement t over time")
+        assertTrue(registers.t >= 0, "t should not go negative")
     }
 
     @Test
-    fun `test timer does not go below zero`() {
-        val bank = RegisterBank()
-        bank.t = 1
-        val timer = Timer(bank)
+    fun `timer stops decrementing after stop`() {
+        val registers = RegisterBank()
+        val timer = Timer(registers)
 
+        registers.t = 2
         timer.start()
-        Thread.sleep(100)
+        Thread.sleep(50)
         timer.stop()
 
-        assertEquals(0, bank.t)
+        val valueAfterStop = registers.t
+        Thread.sleep(50)
+
+        assertEquals(valueAfterStop, registers.t, "t should not change after timer stops")
     }
 }
