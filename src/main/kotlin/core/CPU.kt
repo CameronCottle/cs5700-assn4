@@ -11,11 +11,17 @@ class CPU(
 
     fun getScreen(): Screen = screen
 
+    var halted = false
+        private set
+
+    fun halt() {
+        halted = true
+    }
+
     fun step(): Boolean {
         val pc = registers.p
         val mem = if (registers.m) rom else ram
 
-        // stop if we are past the last instruction
         if (pc >= romSize()) return true
 
         val byte1 = mem.read(pc)
@@ -24,9 +30,9 @@ class CPU(
         val instr = instructions.InstructionFactory().createInstruction(byte1, byte2)
         instr.execute(this)
 
-        // HALT on 00 00
-        return byte1 == 0x00 && byte2 == 0x00
+        return halted
     }
+
 
     private fun romSize(): Int = (rom as memory.ROM).size()
 

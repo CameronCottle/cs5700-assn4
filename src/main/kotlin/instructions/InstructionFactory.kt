@@ -1,10 +1,15 @@
 package instructions
 
 import instructions.methods.DrawInstruction
+import instructions.methods.HaltInstruction
 import instructions.methods.StoreInstruction
 
 class InstructionFactory {
     fun createInstruction(byte1: Int, byte2: Int): Instruction {
+        if (byte1 == 0x00 && byte2 == 0x00) {
+            return HaltInstruction(byte1, byte2)
+        }
+
         val opcode = (byte1 shr 4) and 0xF
 
         return when (opcode) {
