@@ -7,14 +7,15 @@ class CPU(
     private var rom: Memory
 ) {
     val registers = RegisterBank()
+    private val screen = Screen.instance
 
-    // Screen is no longer stored here
-    var screenDirty: Boolean = false
+    fun getScreen(): Screen = screen
 
     fun step(): Boolean {
         val pc = registers.p
         val mem = if (registers.m) rom else ram
 
+        // stop if we are past the last instruction
         if (pc >= romSize()) return true
 
         val byte1 = mem.read(pc)
@@ -23,11 +24,8 @@ class CPU(
         val instr = instructions.InstructionFactory().createInstruction(byte1, byte2)
         instr.execute(this)
 
+        // HALT on 00 00
         return byte1 == 0x00 && byte2 == 0x00
-    }
-
-    fun markScreenDirty() {
-        screenDirty = true
     }
 
     private fun romSize(): Int = (rom as memory.ROM).size()
@@ -35,7 +33,6 @@ class CPU(
     fun reset(newRom: Memory? = null) {
         if (newRom != null) rom = newRom
         registers.reset()
-        screenDirty = false
+        screen.clear()
     }
 }
-

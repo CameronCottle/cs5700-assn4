@@ -2,14 +2,23 @@ package core
 
 import memory.RAM
 import memory.ROM
+import observer.ScreenObserver
 
-class EmulatorFacade {
+class EmulatorFacade : ScreenObserver {
 
     private val ram = RAM()
     private var rom = ROM(IntArray(4096))
     private val cpu = CPU(ram, rom)
     private val loader = ProgramLoader()
-    private val screen = Screen.instance  // Screen lives in Facade now
+    private val screen = Screen.instance
+
+    init {
+        screen.addObserver(this)  // Subscribe to screen updates
+    }
+
+    override fun onScreenUpdate(screen: Array<CharArray>) {
+        drawScreen(screen)
+    }
 
     fun loadProgram(path: String) {
         val program = loader.loadOutFile(path)
@@ -20,29 +29,17 @@ class EmulatorFacade {
         screen.clear()
     }
 
-    fun step(): Boolean {
-        val halted = cpu.step()
-
-        // Only draw if a character was actually drawn
-        if (cpu.screenDirty) {
-            drawScreen()
-            cpu.screenDirty = false
-        }
-
-        return halted
-    }
+    fun step(): Boolean = cpu.step()
 
     fun run(maxSteps: Int = 1000) {
-        var steps = 0
-        while (steps < maxSteps) {
+        repeat(maxSteps) { step ->
             if (step()) return
-            steps++
         }
         println("Max steps reached ($maxSteps) without halt.")
     }
 
-    private fun drawScreen() {
-        for (row in screen.snapshot()) {
+    private fun drawScreen(screenData: Array<CharArray>) {
+        for (row in screenData) {
             println(row.concatToString())
         }
         println("========")
@@ -54,3 +51,4 @@ class EmulatorFacade {
         screen.clear()
     }
 }
+

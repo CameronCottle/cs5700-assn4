@@ -16,9 +16,6 @@ class DrawInstruction(byte1: Int, byte2: Int) : Instruction(byte1, byte2) {
             throw IllegalStateException("Cannot draw non-ASCII character $charValue")
         }
 
-        // ✅ Only mark dirty after we actually write something
-        core.Screen.instance.write(col, row, charValue.toChar())
-        cpu.screenDirty = true
+        Screen.instance.write(col, row, charValue.toChar())
     }
-
 }
