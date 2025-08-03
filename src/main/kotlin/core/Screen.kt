@@ -1,6 +1,6 @@
 package core
 
-class Screen private constructor() {
+object Screen {
 
     // internal 64-byte RAM (0x00 = blank)
     private val buffer = ByteArray(64) { 0 }
@@ -31,10 +31,5 @@ class Screen private constructor() {
             println(line.concatToString())
         }
         println("========")
-    }
-
-
-    companion object {
-        val instance: Screen by lazy { Screen() }
     }
 }
