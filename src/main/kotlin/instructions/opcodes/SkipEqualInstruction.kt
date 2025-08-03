@@ -1,4 +1,4 @@
-package instructions.methods
+package instructions.opcodes
 
 import core.CPU
 import instructions.Instruction
@@ -15,7 +15,7 @@ class SkipEqualInstruction(byte1: Int, byte2: Int) : Instruction(byte1, byte2) {
         shouldSkip = cpu.getRegisters()[rX] == cpu.getRegisters()[rY]
     }
 
-    override fun postExecute(cpu: CPU) {
+    override fun postPerform(cpu: CPU) {
         cpu.getRegisters().p += if (shouldSkip) 4 else 2
     }
 }

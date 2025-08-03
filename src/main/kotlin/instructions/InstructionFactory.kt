@@ -1,21 +1,21 @@
 package instructions
 
-import instructions.methods.AddInstruction
-import instructions.methods.ConvertByteToAsciiInstruction
-import instructions.methods.ConvertToBase10Instruction
-import instructions.methods.DrawInstruction
-import instructions.methods.HaltInstruction
-import instructions.methods.JumpInstruction
-import instructions.methods.ReadInstruction
-import instructions.methods.ReadKeyboardInstruction
-import instructions.methods.ReadTInstruction
-import instructions.methods.SetAInstruction
-import instructions.methods.SetTInstruction
-import instructions.methods.SkipEqualInstruction
-import instructions.methods.StoreInstruction
-import instructions.methods.SwitchMemoryInstruction
-import instructions.methods.WriteInstruction
-import instructions.methods.SubInstruction
+import instructions.opcodes.AddInstruction
+import instructions.opcodes.ConvertByteToAsciiInstruction
+import instructions.opcodes.ConvertToBase10Instruction
+import instructions.opcodes.DrawInstruction
+import instructions.opcodes.HaltInstruction
+import instructions.opcodes.JumpInstruction
+import instructions.opcodes.ReadInstruction
+import instructions.opcodes.ReadKeyboardInstruction
+import instructions.opcodes.ReadTInstruction
+import instructions.opcodes.SetAInstruction
+import instructions.opcodes.SetTInstruction
+import instructions.opcodes.SkipEqualInstruction
+import instructions.opcodes.StoreInstruction
+import instructions.opcodes.SwitchMemoryInstruction
+import instructions.opcodes.WriteInstruction
+import instructions.opcodes.SubInstruction
 
 class InstructionFactory {
     fun createInstruction(byte1: Int, byte2: Int): Instruction {

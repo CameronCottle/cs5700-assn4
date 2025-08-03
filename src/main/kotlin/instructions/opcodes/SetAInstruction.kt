@@ -1,4 +1,4 @@
-package instructions.methods
+package instructions.opcodes
 
 import core.CPU
 import instructions.Instruction

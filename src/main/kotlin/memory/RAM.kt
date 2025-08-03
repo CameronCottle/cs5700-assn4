@@ -9,8 +9,4 @@ class RAM : Memory {
     override fun write(address: Int, value: Int) {
         data[address % data.size] = value and 0xFF
     }
-
-    fun clear() {
-        data.fill(0)
-    }
 }

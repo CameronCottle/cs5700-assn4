@@ -1,8 +1,6 @@
 package core
 
 object Screen {
-
-    // internal 64-byte RAM (0x00 = blank)
     private val buffer = ByteArray(64) { 0 }
 
     fun write(x: Int, y: Int, value: Int) {

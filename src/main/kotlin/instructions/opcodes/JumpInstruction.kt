@@ -1,4 +1,4 @@
-package instructions.methods
+package instructions.opcodes
 
 import core.CPU
 import instructions.Instruction
@@ -17,7 +17,7 @@ class JumpInstruction(byte1: Int, byte2: Int) : Instruction(byte1, byte2) {
         cpu.getRegisters().p = address
     }
 
-    override fun postExecute(cpu: CPU) {
+    override fun postPerform(cpu: CPU) {
         // Override default increment — Jump does not auto-increment
     }
 }
