@@ -20,7 +20,9 @@ class RegisterBank {
         get() = _a
         set(value) { _a = value and 0xFFFF }
 
-    var m: Boolean = false
+    var m: Int = 0
+        set(value) { field = value and 0x1 } // ensure only 0 or 1
+
 
     /** Enables registerBank[index] syntax */
     operator fun get(index: Int): Int {
@@ -36,6 +38,6 @@ class RegisterBank {
         p = 0
         t = 0
         a = 0
-        m = false
+        m = 0
     }
 }

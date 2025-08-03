@@ -13,7 +13,6 @@ class EmulatorFacade {
     /** Load program from .out file into ROM */
     fun loadProgram(path: String) {
         val program = loader.loadOutFile(path)
-        println("Loaded program with ${program.size} nibbles")
 
         rom = ROM(program)
         cpu.reset(rom)
@@ -30,7 +29,6 @@ class EmulatorFacade {
         repeat(maxSteps) {
             if (step()) return
         }
-        println("Max steps reached ($maxSteps) without halt.")
     }
 
     /** Reset everything */

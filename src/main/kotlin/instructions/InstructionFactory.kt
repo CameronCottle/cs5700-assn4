@@ -9,6 +9,7 @@ import instructions.methods.ReadInstruction
 import instructions.methods.ReadKeyboardInstruction
 import instructions.methods.SetAInstruction
 import instructions.methods.StoreInstruction
+import instructions.methods.SwitchMemoryInstruction
 import instructions.methods.WriteInstruction
 
 class InstructionFactory {
@@ -27,7 +28,7 @@ class InstructionFactory {
             0x4 -> WriteInstruction(byte1, byte2)
 //            0x5 -> JumpInstruction(byte1, byte2)
             0x6 -> ReadKeyboardInstruction(byte1, byte2)
-//            0x7 -> SwitchMemoryInstruction(byte1, byte2)
+            0x7 -> SwitchMemoryInstruction(byte1, byte2)
 //            0x8 -> SkipEqualInstruction(byte1, byte2)
 //            0x9 -> SkipNotEqualInstruction(byte1, byte2)
             0xA -> SetAInstruction(byte1, byte2)

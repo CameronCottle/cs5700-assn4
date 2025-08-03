@@ -10,9 +10,9 @@ class WriteInstruction(byte1: Int, byte2: Int) : Instruction(byte1, byte2) {
         val addr = cpu.registers.a
         val value = cpu.registers[rX]
 
-        val mem = if (cpu.registers.m) cpu.getROM() else cpu.getRAM()
+        val mem = if (cpu.registers.m == 1) cpu.getROM() else cpu.getRAM()
         mem.write(addr, value)
 
-        cpu.registers.p += 2
+        println("WRITE (M=${cpu.registers.m}) ${if (cpu.registers.m == 1) "ROM" else "RAM"}[$addr] <- r$rX ($value)")
     }
 }
