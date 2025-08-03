@@ -3,6 +3,7 @@ package instructions
 import instructions.methods.DrawInstruction
 import instructions.methods.HaltInstruction
 import instructions.methods.StoreInstruction
+import instructions.methods.WriteInstruction
 
 class InstructionFactory {
     fun createInstruction(byte1: Int, byte2: Int): Instruction {
@@ -17,7 +18,7 @@ class InstructionFactory {
 //            0x1 -> AddInstruction(byte1, byte2)
 //            0x2 -> SubInstruction(byte1, byte2)
 //            0x3 -> ReadInstruction(byte1, byte2)
-//            0x4 -> WriteInstruction(byte1, byte2)
+            0x4 -> WriteInstruction(byte1, byte2)
 //            0x5 -> JumpInstruction(byte1, byte2)
 //            0x6 -> ReadKeyboardInstruction(byte1, byte2)
 //            0x7 -> SwitchMemoryInstruction(byte1, byte2)

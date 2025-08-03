@@ -1,40 +1,38 @@
 package core
 
-import observer.ScreenObserver
-import observer.ScreenSubject
+class Screen private constructor() {
 
-class Screen private constructor() : ScreenSubject {
+    // internal 64-byte RAM (0x00 = blank)
+    private val buffer = ByteArray(64) { 0 }
 
-    private val buffer = Array(8) { CharArray(8) { '0' } }
-    private val observers = mutableListOf<ScreenObserver>()
-
-    override fun addObserver(observer: ScreenObserver) {
-        observers.add(observer)
-    }
-
-    override fun removeObserver(observer: ScreenObserver) {
-        observers.remove(observer)
-    }
-
-    override fun notifyObservers() {
-        val snapshot = snapshot()
-        observers.forEach { it.onScreenUpdate(snapshot) }
-    }
-
-    fun write(x: Int, y: Int, char: Char) {
-        buffer[y][x] = char
-        notifyObservers()
+    fun write(x: Int, y: Int, value: Int) {
+        buffer[y * 8 + x] = value.toByte()
     }
 
     fun clear() {
-        for (row in buffer) row.fill('0')
+        buffer.fill(0)
     }
 
     fun snapshot(): Array<CharArray> =
-        buffer.map { it.copyOf() }.toTypedArray()
+        Array(8) { row ->
+            CharArray(8) { col ->
+                val byte = buffer[row * 8 + col]
+                if (byte.toInt() == 0) '0' else byte.toInt().toChar()
+            }
+        }
+
+    fun render() {
+        for (row in 0 until 8) {
+            val line = CharArray(8) { col ->
+                val byte = buffer[row * 8 + col]
+                if (byte.toInt() == 0) '0' else byte.toInt().toChar()
+            }
+            println(line.concatToString())
+        }
+        println("========")
+    }
 
     companion object {
         val instance: Screen by lazy { Screen() }
     }
 }
-

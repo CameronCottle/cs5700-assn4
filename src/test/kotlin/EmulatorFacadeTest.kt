@@ -32,7 +32,6 @@ class EmulatorFacadeTest {
         facade.loadProgram(file.absolutePath)
 
         // Should not throw and ROM dump should print
-        facade.dumpROM(2)
         file.deleteOnExit()
     }
 

@@ -22,11 +22,12 @@ class RegisterBank {
 
     var m: Boolean = true
 
-    fun get(index: Int): Int {
+    /** Enables registerBank[index] syntax */
+    operator fun get(index: Int): Int {
         return gpr[index] and 0xFF
     }
 
-    fun set(index: Int, value: Int) {
+    operator fun set(index: Int, value: Int) {
         gpr[index] = value and 0xFF
     }
 
@@ -35,5 +36,6 @@ class RegisterBank {
         p = 0
         t = 0
         a = 0
+        m = true
     }
 }
