@@ -11,6 +11,7 @@ import instructions.methods.SetAInstruction
 import instructions.methods.StoreInstruction
 import instructions.methods.SwitchMemoryInstruction
 import instructions.methods.WriteInstruction
+import instructions.methods.SubInstruction
 
 class InstructionFactory {
     fun createInstruction(byte1: Int, byte2: Int): Instruction {
@@ -23,7 +24,7 @@ class InstructionFactory {
         return when (opcode) {
             0x0 -> StoreInstruction(byte1, byte2)
             0x1 -> AddInstruction(byte1, byte2)
-//            0x2 -> SubInstruction(byte1, byte2)
+            0x2 -> SubInstruction(byte1, byte2)
             0x3 -> ReadInstruction(byte1, byte2)
             0x4 -> WriteInstruction(byte1, byte2)
 //            0x5 -> JumpInstruction(byte1, byte2)
