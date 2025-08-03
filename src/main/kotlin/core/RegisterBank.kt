@@ -20,7 +20,7 @@ class RegisterBank {
         get() = _a
         set(value) { _a = value and 0xFFFF }
 
-    var m: Boolean = true
+    var m: Boolean = false
 
     /** Enables registerBank[index] syntax */
     operator fun get(index: Int): Int {
@@ -36,6 +36,6 @@ class RegisterBank {
         p = 0
         t = 0
         a = 0
-        m = true
+        m = false
     }
 }

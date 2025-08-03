@@ -16,26 +16,22 @@ class CPU(
     var halted = false
         private set
 
-    /** Facade methods for memory access */
-    fun readMem(address: Int): Int {
-        val mem = if (registers.m) rom else ram
-        return mem.read(address)
-    }
+    fun readRAM(address: Int): Int = ram.read(address)
+    fun writeRAM(address: Int, value: Int) = ram.write(address, value)
 
-    fun writeMem(address: Int, value: Int) {
-        // Only RAM is writable
-        ram.write(address, value)
-    }
+    fun readROM(address: Int): Int = rom.read(address)
 
-    /** Single-step CPU execution */
     fun step(): Boolean {
         val pc = registers.p
 
-        // Stop if PC is outside ROM (safety)
-        if (pc >= romSize()) return true
+        // If PC is outside ROM size, halt gracefully
+        if (pc + 1 >= romSize()) {
+            halted = true
+            return true
+        }
 
-        val byte1 = readMem(pc)
-        val byte2 = readMem(pc + 1)
+        val byte1 = readROM(pc)
+        val byte2 = readROM(pc + 1)
 
         val instr = instructions.InstructionFactory().createInstruction(byte1, byte2)
         instr.execute(this)

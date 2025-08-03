@@ -15,6 +15,6 @@ abstract class Instruction(val byte1: Int, val byte2: Int) {
     protected open fun preExecute(cpu: CPU) {}
     protected abstract fun perform(cpu: CPU)
     protected open fun postExecute(cpu: CPU) {
-        cpu.registers.p += 2 // default behavior: increment PC
+        cpu.registers.p += 2
     }
 }
