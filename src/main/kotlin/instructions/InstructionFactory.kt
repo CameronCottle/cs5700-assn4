@@ -5,9 +5,13 @@ import instructions.methods.ConvertByteToAsciiInstruction
 import instructions.methods.ConvertToBase10Instruction
 import instructions.methods.DrawInstruction
 import instructions.methods.HaltInstruction
+import instructions.methods.JumpInstruction
 import instructions.methods.ReadInstruction
 import instructions.methods.ReadKeyboardInstruction
+import instructions.methods.ReadTInstruction
 import instructions.methods.SetAInstruction
+import instructions.methods.SetTInstruction
+import instructions.methods.SkipEqualInstruction
 import instructions.methods.StoreInstruction
 import instructions.methods.SwitchMemoryInstruction
 import instructions.methods.WriteInstruction
@@ -27,14 +31,14 @@ class InstructionFactory {
             0x2 -> SubInstruction(byte1, byte2)
             0x3 -> ReadInstruction(byte1, byte2)
             0x4 -> WriteInstruction(byte1, byte2)
-//            0x5 -> JumpInstruction(byte1, byte2)
+            0x5 -> JumpInstruction(byte1, byte2)
             0x6 -> ReadKeyboardInstruction(byte1, byte2)
             0x7 -> SwitchMemoryInstruction(byte1, byte2)
-//            0x8 -> SkipEqualInstruction(byte1, byte2)
+            0x8 -> SkipEqualInstruction(byte1, byte2)
 //            0x9 -> SkipNotEqualInstruction(byte1, byte2)
             0xA -> SetAInstruction(byte1, byte2)
-//            0xB -> SetTInstruction(byte1, byte2)
-//            0xC -> ReadTInstruction(byte1, byte2)
+            0xB -> SetTInstruction(byte1, byte2)
+            0xC -> ReadTInstruction(byte1, byte2)
             0xD -> ConvertToBase10Instruction(byte1, byte2)
             0xE -> ConvertByteToAsciiInstruction(byte1, byte2)
             0xF -> DrawInstruction(byte1, byte2)

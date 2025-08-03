@@ -6,9 +6,11 @@ import memory.ROM
 class CPU(
     private val ram: Memory,
     private var rom: Memory
+
 ) {
     val registers = RegisterBank()
     private val screen = Screen.instance
+    private val timer = Timer(registers)
     fun getRAM(): Memory = ram
     fun getROM(): Memory = rom
     fun getScreen() = screen
@@ -16,6 +18,9 @@ class CPU(
     var halted = false
         private set
 
+
+    fun startTimer() = timer.start()
+    fun stopTimer() = timer.stop()
     fun readRAM(address: Int): Int = ram.read(address)
     fun writeRAM(address: Int, value: Int) = ram.write(address, value)
 
