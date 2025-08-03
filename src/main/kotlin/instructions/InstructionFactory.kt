@@ -12,6 +12,7 @@ import instructions.opcodes.ReadTInstruction
 import instructions.opcodes.SetAInstruction
 import instructions.opcodes.SetTInstruction
 import instructions.opcodes.SkipEqualInstruction
+import instructions.opcodes.SkipNotEqualInstruction
 import instructions.opcodes.StoreInstruction
 import instructions.opcodes.SwitchMemoryInstruction
 import instructions.opcodes.WriteInstruction
@@ -35,7 +36,7 @@ class InstructionFactory {
             0x6 -> ReadKeyboardInstruction(byte1, byte2)
             0x7 -> SwitchMemoryInstruction(byte1, byte2)
             0x8 -> SkipEqualInstruction(byte1, byte2)
-//            0x9 -> SkipNotEqualInstruction(byte1, byte2)
+            0x9 -> SkipNotEqualInstruction(byte1, byte2)
             0xA -> SetAInstruction(byte1, byte2)
             0xB -> SetTInstruction(byte1, byte2)
             0xC -> ReadTInstruction(byte1, byte2)

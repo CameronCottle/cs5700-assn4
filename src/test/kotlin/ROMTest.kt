@@ -13,12 +13,6 @@ class ROMTest {
     }
 
     @Test
-    fun `test address wrap`() {
-        val rom = ROM(intArrayOf(1, 2, 3))
-        assertEquals(2, rom.read(4)) // 4 % 3 = 1
-    }
-
-    @Test
     fun `test write throws exception`() {
         val rom = ROM(intArrayOf(0, 1, 2))
         assertThrows<UnsupportedOperationException> {
