@@ -11,7 +11,7 @@ class SubInstruction(byte1: Int, byte2: Int) : Instruction(byte1, byte2) {
         val rZ = byte2 and 0xF
 
         // Perform subtraction and wrap to 0-255 (like unsigned 8-bit)
-        val diff = (cpu.registers[rX] - cpu.registers[rY]) and 0xFF
-        cpu.registers[rZ] = diff
+        val diff = (cpu.getRegisters()[rX] - cpu.getRegisters()[rY]) and 0xFF
+        cpu.getRegisters()[rZ] = diff
     }
 }

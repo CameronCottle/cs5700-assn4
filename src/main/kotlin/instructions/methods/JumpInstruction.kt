@@ -14,7 +14,7 @@ class JumpInstruction(byte1: Int, byte2: Int) : Instruction(byte1, byte2) {
             throw IllegalStateException("Jump to odd address $address is invalid")
         }
 
-        cpu.registers.p = address
+        cpu.getRegisters().p = address
     }
 
     override fun postExecute(cpu: CPU) {

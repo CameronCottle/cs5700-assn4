@@ -10,36 +10,24 @@ class EmulatorFacade {
     private val cpu = CPU(ram, rom)
     private val loader = ProgramLoader()
 
-    /** Load program from .out file into ROM */
+    // loads a program into the rom
     fun loadProgram(path: String) {
         val program = loader.loadOutFile(path)
         rom = ROM(program)
         cpu.reset(rom)
     }
 
-    /** Step the CPU once */
+    // step the cpu
     fun step(): Boolean = cpu.step()
 
-    /** Run until halt */
-    fun run(maxSteps: Int = Int.MAX_VALUE) {
-        cpu.startTimer()  // Start 60Hz timer
-
-        val targetHz = 500        // CPU frequency ~500Hz
+    fun run() {
+        cpu.startTimer()
+        val targetHz = 500
         val sleepTime = 1000L / targetHz
-
-        var steps = 0
-        while (!cpu.halted && steps < maxSteps) {
+        while (!cpu.halted) {
             step()
-            Thread.sleep(sleepTime)  // Pace CPU
-            steps++
+            Thread.sleep(sleepTime)
         }
-
-        cpu.stopTimer() // Stop timer when done
-    }
-
-    /** Reset everything */
-    fun reset() {
-        cpu.reset()
-        for (i in 0 until 4096) ram.write(i, 0)
+        cpu.stopTimer()
     }
 }

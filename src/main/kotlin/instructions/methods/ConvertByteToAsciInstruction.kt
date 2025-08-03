@@ -8,7 +8,7 @@ class ConvertByteToAsciiInstruction(byte1: Int, byte2: Int) : Instruction(byte1,
     override fun perform(cpu: CPU) {
         val rX = byte1 and 0xF
         val rY = (byte2 shr 4) and 0xF
-        val value = cpu.registers[rX] and 0xFF
+        val value = cpu.getRegisters()[rX] and 0xFF
 
         val nibble = value and 0xF
 
@@ -18,6 +18,6 @@ class ConvertByteToAsciiInstruction(byte1: Int, byte2: Int) : Instruction(byte1,
             'A'.code + (nibble - 10)
         }
 
-        cpu.registers[rY] = ascii
+        cpu.getRegisters()[rY] = ascii
     }
 }

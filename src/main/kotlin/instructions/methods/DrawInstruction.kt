@@ -10,7 +10,7 @@ class DrawInstruction(byte1: Int, byte2: Int) : Instruction(byte1, byte2) {
         val rY = (byte2 shr 4) and 0xF  // row
         val rZ = byte2 and 0xF          // col
 
-        val value = cpu.registers[rX] and 0xFF
+        val value = cpu.getRegisters()[rX] and 0xFF
         if (value > 0x7F) {
             throw IllegalStateException(
                 "Program terminated: DRAW invalid value $value in r$rX"

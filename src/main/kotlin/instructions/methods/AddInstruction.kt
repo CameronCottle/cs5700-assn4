@@ -10,7 +10,7 @@ class AddInstruction(byte1: Int, byte2: Int) : Instruction(byte1, byte2) {
         val rY = (byte2 shr 4) and 0xF
         val rZ = byte2 and 0xF
 
-        val sum = (cpu.registers[rX] + cpu.registers[rY]) and 0xFF
-        cpu.registers[rZ] = sum
+        val sum = (cpu.getRegisters()[rX] + cpu.getRegisters()[rY]) and 0xFF
+        cpu.getRegisters()[rZ] = sum
     }
 }

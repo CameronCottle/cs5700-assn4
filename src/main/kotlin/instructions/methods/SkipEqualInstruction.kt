@@ -12,10 +12,10 @@ class SkipEqualInstruction(byte1: Int, byte2: Int) : Instruction(byte1, byte2) {
         val rY = (byte2 shr 4) and 0xF
 
         // Determine if we should skip the next instruction
-        shouldSkip = cpu.registers[rX] == cpu.registers[rY]
+        shouldSkip = cpu.getRegisters()[rX] == cpu.getRegisters()[rY]
     }
 
     override fun postExecute(cpu: CPU) {
-        cpu.registers.p += if (shouldSkip) 4 else 2
+        cpu.getRegisters().p += if (shouldSkip) 4 else 2
     }
 }

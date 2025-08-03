@@ -18,6 +18,6 @@ class ReadKeyboardInstruction(byte1: Int, byte2: Int) : Instruction(byte1, byte2
         val value = sanitized.toIntOrNull(16) ?: 0
 
         // Store into register
-        cpu.registers[rX] = value
+        cpu.getRegisters()[rX] = value
     }
 }
